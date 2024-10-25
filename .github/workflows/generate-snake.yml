@@ -1,0 +1,31 @@
+name: Generate Snake
+
+on:
+  schedule: # Run this workflow every 6 hours
+    - cron: "0 */6 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository content
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Generate the snake animation
+      - name: Generate Snake
+        uses: Platane/snk@v2
+        with:
+          github_user_name: MehediHasan-dev
+          outputs: dist/snake.svg
+
+      # Push the Snake SVG to the output branch
+      # The output branch can be any branch you prefer
+      - name: Push Snake SVG to the output branch
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          branch: output
+          force: true
+          path: dist
