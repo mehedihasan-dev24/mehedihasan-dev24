@@ -38,38 +38,42 @@
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure the GitHub token is properly referenced
 
-
-
-
 name: Generate Snake Animation
 
 on:
   schedule:
     - cron: "0 */12 * * *"  # Runs every 12 hours
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual triggers
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      # Step 2: Generate the snake.svg using the updated version of Platane/snk
       - name: Generate Snake
-        uses: Platane/snk@v2
+        uses: Platane/snk@v3  # Update to the latest version v3
         with:
-          github_user_name: MehediHasan-dev
+          github_user_name: MehediHasan-dev  # Make sure this matches your GitHub username
           outputs: dist/snake.svg
 
-      # Step to update the SVG background color to white
+      # Step 3: Add a step to modify the SVG background color if needed
       - name: Change Snake SVG Background Color to White
         run: |
           sed -i 's/<svg /<svg style="background-color:white;" /' dist/snake.svg
 
+      # Step 4: Push the generated SVG to the output branch
       - name: Push Snake SVG to the output branch
         uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
-          target_branch: output
-          build_dir: dist
+          target_branch: output  # Push the SVG to the output branch
+          build_dir: dist        # Directory where the SVG is stored
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+
+
+
