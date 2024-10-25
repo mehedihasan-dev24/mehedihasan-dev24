@@ -1,31 +1,39 @@
 name: Generate Snake
 
+# Controls when the action will run. In this case, it will run every 6 hours and allows manual triggers.
 on:
-  schedule: # Run this workflow every 6 hours
+  schedule:
+    # Runs at every 6 hours
     - cron: "0 */6 * * *"
-
   workflow_dispatch:
 
+# Set up the job to run on the latest version of Ubuntu.
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout the repository content
-      - name: Checkout
+      # Checks out your repository to the GitHub runner
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Generate the snake animation
+      # Generates the snake animation and saves it as a SVG file in the dist/ directory
       - name: Generate Snake
         uses: Platane/snk@v2
         with:
           github_user_name: MehediHasan-dev
           outputs: dist/snake.svg
 
-      # Push the Snake SVG to the output branch
-      # The output branch can be any branch you prefer
+      # Creates a commit with the generated snake.svg and pushes it to the output branch
       - name: Push Snake SVG to the output branch
         uses: ad-m/github-push-action@v0.6.0
         with:
           branch: output
           force: true
           path: dist
+
+      # Optionally, you can automatically display the snake in your README file by committing the generated SVG
+      - name: Update README with Snake
+        run: |
+          echo "![Snake animation](https://github.com/MehediHasan-dev/MehediHasan-dev/blob/output/snake.svg)" >> README.md
+
