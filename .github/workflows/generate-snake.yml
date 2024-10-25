@@ -37,7 +37,6 @@
 #           build_dir: dist
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure the GitHub token is properly referenced
-
 name: Generate Snake Animation
 
 on:
@@ -61,12 +60,15 @@ jobs:
           github_user_name: MehediHasan-dev  # Make sure this matches your GitHub username
           outputs: dist/snake.svg
 
-      # Step 3: Add a step to modify the SVG background color if needed
-      - name: Change Snake SVG Background Color to White
-        run: |
-          sed -i 's/<svg /<svg style="background-color:white;" /' dist/snake.svg
+      # Step 3: Set proper permissions for the dist directory
+      - name: Set proper permissions for the dist directory
+        run: chmod -R 777 dist
 
-      # Step 4: Push the generated SVG to the output branch
+      # Step 4: Modify the Snake SVG Background Color to White (optional)
+      - name: Change Snake SVG Background Color to White
+        run: sed -i 's/<svg /<svg style="background-color:white;" /' dist/snake.svg
+
+      # Step 5: Push the generated SVG to the output branch
       - name: Push Snake SVG to the output branch
         uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
@@ -74,6 +76,5 @@ jobs:
           build_dir: dist        # Directory where the SVG is stored
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
-
 
 
