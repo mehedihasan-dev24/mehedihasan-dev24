@@ -27,7 +27,7 @@ jobs:
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: MehediHasan-dev  # Correctly reference the GitHub username
-          outputs: dist/snake.svg?palette=github-dark
+          outputs: dist/snake.svg?palette=github-light
 
       # Push the snake.svg to the output branch
       - name: Push snake.svg to the output branch
