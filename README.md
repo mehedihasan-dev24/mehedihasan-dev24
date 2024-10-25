@@ -1,3 +1,3 @@
 <div align="center">
-  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/MehediHasan-dev/MehediHasan-dev/output/dist/snake.svg" />
+  <img alt="snake eating my contributions" src="https://github.com/mehedihasan-dev24/mehedihasan-dev24/blob/output/snake.svg" />
 </div>
